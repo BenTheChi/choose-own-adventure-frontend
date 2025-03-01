@@ -6,38 +6,35 @@ import Chat from "./components/Chat";
 import Entrance from "./components/Entrance.tsx";
 import Lobby from "./components/Lobby";
 import { GameState } from "./model/game_state";
+import LobbyScreen from "./components/lobbyScreen";
 
 //PROD
 const API_URL = "https://choose-own-adventure-backend.onrender.com";
 const PATH = { path: "/socket.io" };
+
 //DEV
 // const API_URL = "http://localhost:4000";
 // const PATH = {};
 
-export default function App() {
+function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
+  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
   const [gameObject, setGameObject] = useState<GameObject | null>(null);
   const [gameState, setGameState] = useState<GameState>(GameState.ENTRANCE);
 
   useEffect(() => {
-    const newSocket = io(API_URL, PATH);
+    const newSocket = io(API_URL, PATH); //Local Dev backend route
     setSocket(newSocket);
 
-    newSocket.on(GAME_OBJECT_KEY, (gameObject) => {
-      console.log("Received game object:", gameObject);
-      setGameObject(gameObject);
-    });
-
-    // TODO REMOVE AND GET THIS FROM SERVER
-    setGameObject(initializeGameObject());
-
-    newSocket.on(CHAT_MESSAGE_KEY, (message) => {
+    newSocket.on("chat-message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
     return () => {
-      newSocket.disconnect();
+      if (newSocket) {
+        newSocket.disconnect();
+      }
     };
   }, []);
 
@@ -57,3 +54,5 @@ export default function App() {
       return <div />;
   }
 }
+
+export default App;
