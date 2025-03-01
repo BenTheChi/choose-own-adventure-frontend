@@ -3,7 +3,7 @@ import { io, Socket } from "socket.io-client";
 
 //PROD
 const API_URL = "https://choose-own-adventure-backend.onrender.com";
-const PATH = { path: "/api/socket.io" };
+const PATH = { path: "/socket.io" };
 
 //DEV
 // const API_URL = "http://localhost:4000";
