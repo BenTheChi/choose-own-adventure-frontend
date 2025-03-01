@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
 
 //PROD
-const API_URL = "/api";
+const API_URL = "https://choose-own-adventure-backend.onrender.com";
 const PATH = { path: "/api/socket.io" };
 
 //DEV
