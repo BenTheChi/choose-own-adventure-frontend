@@ -1,5 +1,6 @@
 function Lobby () {
-    return <body style={{display: "flex", flexDirection: "row"}}>
+    return <body style={{display: "flex", 
+    flexDirection: "row"}}>
         {/* Setting of the body flexbox */}
 
                 <div className="lobbyMain" style={{display: "flex", 
@@ -20,19 +21,19 @@ function Lobby () {
                                 justifyContent: "space-evenly"}}>
 
                                 <button className="themeOption">
-                                    
+                                    Adventure
                                 </button>
 
                                 <button className="themeOption">
-
+                                    Action
                                 </button>
 
                                 <button className="themeOption">
-
+                                    Romance
                                 </button>
 
                                 <button className="themeOption">
-
+                                    Mystery
                                 </button>
                             </div>
                             {/*End Theme button selection Section */}
@@ -48,22 +49,22 @@ function Lobby () {
                             <div className="settingBttns" style={{display:"flex", flexDirection:"column"}}>
 
                                 <button className="settingOption">
-                                    
+                                    Medieval
                                 </button>
 
                                 <button className="settingOption">
-
+                                    Fantasy
                                 </button>
 
                                 <button className="settingOption">
-
+                                    Sci-Fi
                                 </button>
 
                                 <button className="settingOption">
-
+                                    Horror
                                 </button>
                                 {/*End World Setting button selection Section */}
-                                
+
                             </div>
                         </div>
                         {/*End Setting side */}
@@ -78,8 +79,8 @@ function Lobby () {
                     {/*End Turns dropdown */}
 
                     <div className="bttnSection">
-                        <button className="startBttn">
-
+                        <button className="startBttn" style={{fontWeight:"bolder", padding: "30px"}}>
+                            START
                         </button>
                     </div>
                     {/*End Start button */}
