@@ -1,14 +1,15 @@
-function Lobby () {
+
+function LobbyScreen () {
     return <body style={{display: "flex", 
     flexDirection: "row"}}>
         {/* Setting of the body flexbox */}
 
                 <div className="lobbyMain" style={{display: "flex", 
-                    flexDirection: "column",}}>
+                    flexDirection: "column", }}>
                         {/* Outermost Left flex box creation & nested flex boxes */}
 
                     <div className="gameConfig" style={{ display: "flex", 
-                        flexDirection: "row"}}>
+                        flexDirection: "row" }}>
                             {/* Container for the yellow Theme & World setting flex boxes */}
 
                         <div className="themeSection" style={{display: "flex", 
@@ -17,7 +18,7 @@ function Lobby () {
                             <h1>Theme</h1>
 
                             <div className="themeBttns" style={{display: "flex", 
-                                flexDirection:"row", 
+                                flexDirection:"column", 
                                 justifyContent: "space-evenly"}}>
 
                                 <button className="themeOption">
@@ -108,7 +109,6 @@ function Lobby () {
                     {/*End Player list Section */}
 
                     <div className="chat">
-
                         <h3>Chat Box</h3>
 
                     </div>
@@ -116,10 +116,11 @@ function Lobby () {
 
                 </div>
                 {/*End of Outer most, right-side flex box container (large/skinny) */}
+
             </body>;
 
 
 }
 
-export default Lobby;
+export default LobbyScreen;
 
