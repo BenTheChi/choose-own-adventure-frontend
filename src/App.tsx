@@ -12,7 +12,7 @@ const PATH = { path: "/socket.io" };
 
 export default function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [, setMessages] = useState<string[]>([]);
   const [gameObject, setGameObject] = useState<GameObject | null>(null);
   const [gameState, setGameState] = useState<GameState>(GameState.ENTRANCE);
 
