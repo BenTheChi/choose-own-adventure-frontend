@@ -1,5 +1,9 @@
 import { useState, useEffect } from "react";
 import { io, Socket } from "socket.io-client";
+import { CHAT_MESSAGE_KEY, GAME_OBJECT_KEY } from "./constants/socket_keys";
+import { GameObject, initializeGameObject } from "./model/game_object";
+import Chat from "./components/Chat";
+import Entrance from "./components/Entrance.tsx";
 import Lobby from "./components/Lobby";
 import { GameState } from "./model/game_state";
 import LobbyScreen from "./components/lobbyScreen";
@@ -14,8 +18,9 @@ const PATH = { path: "/socket.io" };
 
 function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [message, setMessage] = useState("");
   const [messages, setMessages] = useState<string[]>([]);
+  const [gameObject, setGameObject] = useState<GameObject | null>(null);
+  const [gameState, setGameState] = useState<GameState>(GameState.ENTRANCE);
 
   useEffect(() => {
     const newSocket = io(API_URL, PATH); //Local Dev backend route
@@ -32,18 +37,19 @@ function App() {
     };
   }, []);
 
-  const handleSendMessage = () => {
-    if (socket && message) {
-      socket.emit("chat-message", message);
-      setMessage("");
-    }
-  };
-
-  return (
-    <div>
-      <LobbyScreen></LobbyScreen>
-    </div>
-  );
+  switch (gameState) {
+    case GameState.ENTRANCE:
+      return <Entrance setGameState={setGameState}/>
+    case GameState.LOBBY:
+      return (
+        <>
+          <Lobby gameObject={gameObject} setGameState={setGameState} />
+          <Chat socket={socket} messages={messages} setMessages={setMessages} setGameState={setGameState} />
+        </>
+      )
+    case GameState.STORY:
+      return <div />;
+    case GameState.FINISHED:
+      return <div />;
+  }
 }
-
-export default App;
