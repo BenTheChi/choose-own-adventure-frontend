@@ -1,6 +1,6 @@
 import { GameObject } from "../model/game_object";
 import { sendMessage } from "../socket_handler/message_handler";
-import { USER_READY_KEY } from "../constants/socket_keys";
+import { HOST_READY_KEY } from "../constants/socket_keys";
 import { GameState } from "../model/game_state";
 
 interface LobbyProps {
@@ -16,7 +16,7 @@ export default function Lobby({ gameObject, setGameState }: LobbyProps) {
         <>
           <p>Users: {gameObject.users.map((user) => user.name).join(", ")}</p>
           <p>Theme: </p>
-          <button onClick={() => sendMessage(USER_READY_KEY, "true")}>
+          <button onClick={() => sendMessage(HOST_READY_KEY, "true")}>
             Start Game
           </button>
         </>

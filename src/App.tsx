@@ -3,6 +3,7 @@ import { io, Socket } from "socket.io-client";
 import { CHAT_MESSAGE_KEY, GAME_OBJECT_KEY } from "./constants/socket_keys";
 import { GameObject, initializeGameObject } from "./model/game_object";
 import Chat from "./components/Chat";
+import Entrance from "./components/Entrance.tsx";
 import Lobby from "./components/Lobby";
 import { GameState } from "./model/game_state";
 
@@ -42,9 +43,14 @@ export default function App() {
 
   switch (gameState) {
     case GameState.ENTRANCE:
-      return <Chat socket={socket} messages={messages} setMessages={setMessages} setGameState={setGameState} />
+      return <Entrance setGameState={setGameState}/>
     case GameState.LOBBY:
-      return <Lobby gameObject={gameObject} setGameState={setGameState} />;
+      return (
+        <>
+          <Lobby gameObject={gameObject} setGameState={setGameState} />
+          <Chat socket={socket} messages={messages} setMessages={setMessages} setGameState={setGameState} />
+        </>
+      )
     case GameState.STORY:
       return <div />;
     case GameState.FINISHED:
