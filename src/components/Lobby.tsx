@@ -3,15 +3,17 @@ import { GameObject } from "../model/game_object";
 import { GameState } from "../model/game_state";
 import { Socket } from "socket.io-client";
 import { GAME_OBJECT_KEY } from "../constants/socket_keys";
+import Chat from "./Chat";
 
 interface LobbyProps {
   gameObject: GameObject | null;
   setGameState: (gameState: GameState) => void;
   socket: Socket | null;
   setGameObject: React.Dispatch<React.SetStateAction<GameObject | null>>;
+  messages: string[];
 }
 
-export default function Lobby({ gameObject, setGameState, socket, setGameObject }: LobbyProps) {
+export default function Lobby({ gameObject, setGameState, socket, messages, setGameObject }: LobbyProps) {
   useEffect(() => {
     socket?.on(GAME_OBJECT_KEY, (newGameObject) => {
       console.log("Received game object:", newGameObject);
@@ -78,6 +80,7 @@ export default function Lobby({ gameObject, setGameState, socket, setGameObject 
 
             <div className="chat">
               <h3>Chat Box</h3>
+              <Chat socket={socket} messages={messages}></Chat>
             </div>
           </div>
         </div>

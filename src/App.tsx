@@ -4,23 +4,29 @@ import { GameObject } from "./model/game_object";
 import Entrance from "./components/Entrance";
 import Lobby from "./components/Lobby";
 import { GameState } from "./model/game_state";
-import { GAME_OBJECT_KEY } from "./constants/socket_keys";
+import { CHAT_MESSAGE_KEY, GAME_OBJECT_KEY } from "./constants/socket_keys";
 
 // PROD
-const API_URL = "https://choose-own-adventure-backend.onrender.com";
+// const API_URL_PROD = "https://choose-own-adventure-backend.onrender.com";
+// DEV: Imported from local environment .env
+const API_URL_DEV = import.meta.env.BACKEND_URL;
+
 const PATH = { path: "/socket.io" };
+
 
 export default function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
-  const [, setMessages] = useState<string[]>([]);
+  const [messages, setMessages] = useState<string[]>([]);
   const [gameObject, setGameObject] = useState<GameObject | null>(null);
   const [gameState, setGameState] = useState<GameState>(GameState.ENTRANCE);
 
   useEffect(() => {
-    const newSocket = io(API_URL, PATH);
+    // Currently configured to use Dev
+    const newSocket = io(API_URL_DEV, PATH);
+    console.log(`Connecting to ${API_URL_DEV}`);
     setSocket(newSocket);
 
-    newSocket.on("chat-message", (message) => {
+    newSocket.on(CHAT_MESSAGE_KEY, (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
@@ -36,7 +42,7 @@ export default function App() {
       )}
       {gameState === GameState.LOBBY && (
         <>
-          <Lobby gameObject={gameObject} setGameState={setGameState} socket={socket} setGameObject={setGameObject} />
+          <Lobby gameObject={gameObject} setGameState={setGameState} socket={socket} messages={messages} setGameObject={setGameObject} />
         </>
       )}
       {gameState === GameState.STORY && <div>Story Mode</div>}

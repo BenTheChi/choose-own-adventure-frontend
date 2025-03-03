@@ -1,27 +1,39 @@
 import { GameState } from "./game_state";
 import { User } from "./user";
 
+// Store state of the current game
 export interface GameObject {
-    state: GameState,
-    title: string,
-    content: string,
-    choices: string[],
-    turnNumber: number,
-    users: User[],
-    timeLeft: number,
-    chatHistory: string[]
+  gameState: GameState;
+  title: string;
+  content: string;
+  choices: string[];
+  turnNumber: number;
+  maxTurns: number;
+  users: User[];
+  gameHistory: Turn[];
+  theme: string;
+  setting: string;
+  currTurn: number;
+}
+
+// Define interface to track what happens each turn
+export interface Turn {
+  content: string;
+  choice: string;
 }
 
 export function initializeGameObject(): GameObject {
-    return {
-        state: GameState.ENTRANCE,
-        title: "",
-        content: "",
-        choices: [],
-        turnNumber: 0,
-        // TODO: Initialize to empty array
-        users: [{ name: "TestUser", isHost: true }],
-        timeLeft: 0,
-        chatHistory: []
-    }
+  return {
+      gameState: GameState.ENTRANCE,
+      title: "",
+      content: "",
+      choices: [],
+      turnNumber: 0,
+      maxTurns: 0,
+      users: [],
+      gameHistory: [],
+      theme: "",
+      setting: "",
+      currTurn: 0
+  }
 }
