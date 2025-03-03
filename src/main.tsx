@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
 import { GameObject } from "./model/game_object";
-import { Provider, useGameContext } from "./components/Provider";
+import { Provider } from "./components/Provider";
 
 const initialGameObject: GameObject = {
   title: "",
