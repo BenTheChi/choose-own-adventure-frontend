@@ -1,29 +1,25 @@
 import { useEffect } from "react";
-import { GameObject } from "../model/game_object";
 import { GameState } from "../model/game_state";
-import { Socket } from "socket.io-client";
-import { GAME_OBJECT_KEY } from "../constants/socket_keys";
-import Chat from "./Chat";
+import { GAME_OBJECT } from "../constants/socket_keys";
+import { useGameContext } from "./Provider";
 
-interface LobbyProps {
-  gameObject: GameObject | null;
-  setGameState: (gameState: GameState) => void;
-  socket: Socket | null;
-  setGameObject: React.Dispatch<React.SetStateAction<GameObject | null>>;
-  messages: string[];
-}
+export default function Lobby() {
+  const { gameObject, setGameObject, setGameState, socket } = useGameContext();
 
-export default function Lobby({ gameObject, setGameState, socket, messages, setGameObject }: LobbyProps) {
   useEffect(() => {
-    socket?.on(GAME_OBJECT_KEY, (newGameObject) => {
+    socket?.on(GAME_OBJECT, (newGameObject) => {
       console.log("Received game object:", newGameObject);
       setGameObject(newGameObject);
     });
 
     return () => {
-      socket?.off(GAME_OBJECT_KEY);
+      socket?.off(GAME_OBJECT);
     };
   }, [socket]);
+
+  // return () => {
+  //   socket?.off(GAME_OBJECT);
+  // };
 
   return (
     <div>
@@ -31,11 +27,27 @@ export default function Lobby({ gameObject, setGameState, socket, messages, setG
       {gameObject ? (
         <div style={{ display: "flex", flexDirection: "row" }}>
           {/* Left Side */}
-          <div className="lobbyMain" style={{ display: "flex", flexDirection: "column" }}>
-            <div className="gameConfig" style={{ display: "flex", flexDirection: "row" }}>
-              <div className="themeSection" style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            className="lobbyMain"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
+            <div
+              className="gameConfig"
+              style={{ display: "flex", flexDirection: "row" }}
+            >
+              <div
+                className="themeSection"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <h1>Theme</h1>
-                <div className="themeBttns" style={{ display: "flex", flexDirection: "column", justifyContent: "space-evenly" }}>
+                <div
+                  className="themeBttns"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-evenly",
+                  }}
+                >
                   <button className="themeOption">Adventure</button>
                   <button className="themeOption">Action</button>
                   <button className="themeOption">Romance</button>
@@ -43,9 +55,15 @@ export default function Lobby({ gameObject, setGameState, socket, messages, setG
                 </div>
               </div>
 
-              <div className="settingSection" style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                className="settingSection"
+                style={{ display: "flex", flexDirection: "column" }}
+              >
                 <h1>World Setting</h1>
-                <div className="settingBttns" style={{ display: "flex", flexDirection: "column" }}>
+                <div
+                  className="settingBttns"
+                  style={{ display: "flex", flexDirection: "column" }}
+                >
                   <button className="settingOption">Medieval</button>
                   <button className="settingOption">Fantasy</button>
                   <button className="settingOption">Sci-Fi</button>
@@ -59,28 +77,22 @@ export default function Lobby({ gameObject, setGameState, socket, messages, setG
             </div>
 
             <div className="bttnSection">
-              <button className="startBttn" style={{ fontWeight: "bolder", padding: "30px" }}>START</button>
+              <button
+                className="startBttn"
+                style={{ fontWeight: "bolder", padding: "30px" }}
+              >
+                START
+              </button>
             </div>
           </div>
 
           {/* Right Side */}
-          <div className="playerInfo" style={{ display: "flex", flexDirection: "column" }}>
+          <div
+            className="playerInfo"
+            style={{ display: "flex", flexDirection: "column" }}
+          >
             <div className="timer">
               <h3>Timer</h3>
-            </div>
-
-            <div className="playerList" style={{ display: "flex", flexDirection: "column" }}>
-              <h3>Players List</h3>
-              <ul>
-                {gameObject.users.map((user) => (
-                  <li key={user.name}>{user.name} {user.isHost ? "(Host)" : ""}</li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="chat">
-              <h3>Chat Box</h3>
-              <Chat socket={socket} messages={messages}></Chat>
             </div>
           </div>
         </div>
@@ -88,7 +100,9 @@ export default function Lobby({ gameObject, setGameState, socket, messages, setG
         <p>Loading...</p>
       )}
 
-      <button onClick={() => setGameState(GameState.ENTRANCE)}>Back to Entrance</button>
+      <button onClick={() => setGameState(GameState.ENTRANCE)}>
+        Back to Entrance
+      </button>
     </div>
   );
 }

@@ -1,9 +1,7 @@
-import { GameState } from "./game_state";
 import { User } from "./user";
 
 // Store state of the current game
 export interface GameObject {
-  gameState: GameState;
   title: string;
   content: string;
   choices: string[];
@@ -20,20 +18,4 @@ export interface GameObject {
 export interface Turn {
   content: string;
   choice: string;
-}
-
-export function initializeGameObject(): GameObject {
-  return {
-      gameState: GameState.ENTRANCE,
-      title: "",
-      content: "",
-      choices: [],
-      turnNumber: 0,
-      maxTurns: 0,
-      users: [],
-      gameHistory: [],
-      theme: "",
-      setting: "",
-      currTurn: 0
-  }
 }
