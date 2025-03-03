@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Socket } from "socket.io-client";
-import { CHAT_MESSAGE_KEY } from "../constants/socket_keys";
 
 interface ChatProps {
   socket: Socket | null;
@@ -12,7 +11,7 @@ export default function Chat({ socket, messages }: ChatProps) {
 
   const handleSendMessage = () => {
     if (socket && userSubmittedMessage) {
-      socket.emit(CHAT_MESSAGE_KEY, userSubmittedMessage);
+      socket.emit("chat-message", userSubmittedMessage);
       setUserSubmittedMessage("");
     }
   };

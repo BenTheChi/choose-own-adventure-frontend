@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { GameObject } from "../model/game_object";
 import { GameState } from "../model/game_state";
 import { Socket } from "socket.io-client";
-import { GAME_OBJECT_KEY } from "../constants/socket_keys";
 import Chat from "./Chat";
 
 interface LobbyProps {
@@ -15,13 +14,13 @@ interface LobbyProps {
 
 export default function Lobby({ gameObject, setGameState, socket, messages, setGameObject }: LobbyProps) {
   useEffect(() => {
-    socket?.on(GAME_OBJECT_KEY, (newGameObject) => {
+    socket?.on("game-object", (newGameObject) => {
       console.log("Received game object:", newGameObject);
       setGameObject(newGameObject);
     });
 
     return () => {
-      socket?.off(GAME_OBJECT_KEY);
+      socket?.off("game-object");
     };
   }, [socket]);
 

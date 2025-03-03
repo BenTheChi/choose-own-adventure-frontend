@@ -4,15 +4,18 @@ import { GameObject } from "./model/game_object";
 import Entrance from "./components/Entrance";
 import Lobby from "./components/Lobby";
 import { GameState } from "./model/game_state";
-import { CHAT_MESSAGE_KEY, GAME_OBJECT_KEY } from "./constants/socket_keys";
 
 // PROD
 // const API_URL_PROD = "https://choose-own-adventure-backend.onrender.com";
+
 // DEV: Imported from local environment .env
 const API_URL_DEV = import.meta.env.BACKEND_URL;
 
 const PATH = { path: "/socket.io" };
 
+/* HOST_READY_KEY was the only variable left in socket_keys.ts that couldn't be
+   hardcoded because it was as of yet unused. I've left it below for future reference */
+// const HOST_READY_KEY = "host-ready";
 
 export default function App() {
   const [socket, setSocket] = useState<Socket | null>(null);
@@ -26,11 +29,11 @@ export default function App() {
     console.log(`Connecting to ${API_URL_DEV}`);
     setSocket(newSocket);
 
-    newSocket.on(CHAT_MESSAGE_KEY, (message) => {
+    newSocket.on("chat-message", (message) => {
       setMessages((prevMessages) => [...prevMessages, message]);
     });
 
-    newSocket.on(GAME_OBJECT_KEY, (gameObject) => {
+    newSocket.on("game-object", (gameObject) => {
       setGameObject(gameObject);
     });
   }, []);

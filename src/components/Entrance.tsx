@@ -1,7 +1,6 @@
 import { GameState } from "../model/game_state";
 import { useState } from "react";
 import { Socket } from "socket.io-client";
-import { USER_ENTER_KEY } from "../constants/socket_keys";
 
 interface EntranceProps {
   setGameState: (gameState: GameState) => void;
@@ -13,7 +12,7 @@ export default function Entrance({ setGameState, socket }: EntranceProps) {
 
   const handleNameSubmission = () => {
     if (userName.trim() !== "") {
-      socket?.emit(USER_ENTER_KEY, { name: userName, isHost: false });
+      socket?.emit("user-enter", { name: userName, isHost: false });
       setGameState(GameState.LOBBY);
     }
   };
