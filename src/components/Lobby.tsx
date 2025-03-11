@@ -1,11 +1,10 @@
 import { useEffect } from "react";
-import { GameState } from "../model/game_state";
 import { GAME_OBJECT } from "../constants/socket_keys";
 import { useGameContext } from "./Provider";
 import RadioButton from "./RadioButton";
 
 export default function Lobby() {
-  const { gameObject, setGameObject, setGameState, socket } = useGameContext();
+  const { gameObject, setGameObject, socket } = useGameContext();
 
   useEffect(() => {
     socket?.on(GAME_OBJECT, (newGameObject) => {
