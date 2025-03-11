@@ -27,7 +27,7 @@ export default function App() {
       {gameState === GameState.ENTRANCE ? (
         <Entrance />
       ) : (
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row">
           {gameState === GameState.LOBBY && <Lobby />}
           {gameState === GameState.STORY && <div>Story Mode</div>}
           {gameState === GameState.FINISHED && <div>Game Over</div>}
